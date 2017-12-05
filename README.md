@@ -24,7 +24,7 @@ md5(message)
 ## Usage
 
 ~~~ javascript
-var md5 = require('md5');
+import md5 from 'md5js'
 
 console.log(md5('message'));//16位
 console.log(md5('message',32));//32位
