@@ -1,29 +1,49 @@
+/*!
+ * md5js v1.0.2
+ * (c) 2017-2017 penyuying
+ * Released under the MIT License.
+ */
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.md5 = {})));
+}(this, (function (exports) { 'use strict';
+
 /*
 eslint-disable
 */
-export function md5(text, bit) {
-    let s='tttYYY';
-    let txtee=`dsa${s}faf`;
-    var sMessage = text;// this;
+function md5(text, bit) {
+    var s = 'tttYYY';
+    var txtee = 'dsa' + s + 'faf';
+    var sMessage = text; // this;
     console.log(txtee);
-    function RotateLeft(lValue, iShiftBits) { return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits)); }
+    function RotateLeft(lValue, iShiftBits) {
+        return lValue << iShiftBits | lValue >>> 32 - iShiftBits;
+    }
     function AddUnsigned(lX, lY) {
         var lX4, lY4, lX8, lY8, lResult;
-        lX8 = (lX & 0x80000000);
-        lY8 = (lY & 0x80000000);
-        lX4 = (lX & 0x40000000);
-        lY4 = (lY & 0x40000000);
+        lX8 = lX & 0x80000000;
+        lY8 = lY & 0x80000000;
+        lX4 = lX & 0x40000000;
+        lY4 = lY & 0x40000000;
         lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
-        if (lX4 & lY4) return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
+        if (lX4 & lY4) return lResult ^ 0x80000000 ^ lX8 ^ lY8;
         if (lX4 | lY4) {
-            if (lResult & 0x40000000) return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
-            else return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
-        } else return (lResult ^ lX8 ^ lY8);
+            if (lResult & 0x40000000) return lResult ^ 0xC0000000 ^ lX8 ^ lY8;else return lResult ^ 0x40000000 ^ lX8 ^ lY8;
+        } else return lResult ^ lX8 ^ lY8;
     }
-    function F(x, y, z) { return (x & y) | ((~x) & z); }
-    function G(x, y, z) { return (x & z) | (y & (~z)); }
-    function H(x, y, z) { return (x ^ y ^ z); }
-    function I(x, y, z) { return (y ^ (x | (~z))); }
+    function F(x, y, z) {
+        return x & y | ~x & z;
+    }
+    function G(x, y, z) {
+        return x & z | y & ~z;
+    }
+    function H(x, y, z) {
+        return x ^ y ^ z;
+    }
+    function I(x, y, z) {
+        return y ^ (x | ~z);
+    }
     function FF(a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
         return AddUnsigned(RotateLeft(a, s), b);
@@ -44,28 +64,31 @@ export function md5(text, bit) {
         var lWordCount;
         var lMessageLength = sMessage.length;
         var lNumberOfWords_temp1 = lMessageLength + 8;
-        var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
+        var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - lNumberOfWords_temp1 % 64) / 64;
         var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
         var lWordArray = Array(lNumberOfWords - 1);
         var lBytePosition = 0;
         var lByteCount = 0;
         while (lByteCount < lMessageLength) {
-            lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-            lBytePosition = (lByteCount % 4) * 8;
-            lWordArray[lWordCount] = (lWordArray[lWordCount] | (sMessage.charCodeAt(lByteCount) << lBytePosition));
+            lWordCount = (lByteCount - lByteCount % 4) / 4;
+            lBytePosition = lByteCount % 4 * 8;
+            lWordArray[lWordCount] = lWordArray[lWordCount] | sMessage.charCodeAt(lByteCount) << lBytePosition;
             lByteCount++;
         }
-        lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-        lBytePosition = (lByteCount % 4) * 8;
-        lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+        lWordCount = (lByteCount - lByteCount % 4) / 4;
+        lBytePosition = lByteCount % 4 * 8;
+        lWordArray[lWordCount] = lWordArray[lWordCount] | 0x80 << lBytePosition;
         lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
         lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
         return lWordArray;
     }
     function WordToHex(lValue) {
-        var WordToHexValue = '', WordToHexValue_temp = '', lByte, lCount;
+        var WordToHexValue = '',
+            WordToHexValue_temp = '',
+            lByte,
+            lCount;
         for (lCount = 0; lCount <= 3; lCount++) {
-            lByte = (lValue >>> (lCount * 8)) & 255;
+            lByte = lValue >>> lCount * 8 & 255;
             WordToHexValue_temp = '0' + lByte.toString(16);
             WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
         }
@@ -73,17 +96,29 @@ export function md5(text, bit) {
     }
     var x = Array();
     var k, AA, BB, CC, DD, a, b, c, d;
-    var S11 = 7, S12 = 12, S13 = 17, S14 = 22;
-    var S21 = 5, S22 = 9, S23 = 14, S24 = 20;
-    var S31 = 4, S32 = 11, S33 = 16, S34 = 23;
-    var S41 = 6, S42 = 10, S43 = 15, S44 = 21;
+    var S11 = 7,
+        S12 = 12,
+        S13 = 17,
+        S14 = 22;
+    var S21 = 5,
+        S22 = 9,
+        S23 = 14,
+        S24 = 20;
+    var S31 = 4,
+        S32 = 11,
+        S33 = 16,
+        S34 = 23;
+    var S41 = 6,
+        S42 = 10,
+        S43 = 15,
+        S44 = 21;
     // Steps 1 and 2. Append padding bits and length and convert to words 
     x = ConvertToWordArray(sMessage);
     // Step 3. Initialise 
-    a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
+    a = 0x67452301;b = 0xEFCDAB89;c = 0x98BADCFE;d = 0x10325476;
     // Step 4. Process the message in 16-word blocks 
     for (k = 0; k < x.length; k += 16) {
-        AA = a; BB = b; CC = c; DD = d;
+        AA = a;BB = b;CC = c;DD = d;
         a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
         d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
         c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
@@ -148,7 +183,7 @@ export function md5(text, bit) {
         d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
         c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
         b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
-        a = AddUnsigned(a, AA); b = AddUnsigned(b, BB); c = AddUnsigned(c, CC); d = AddUnsigned(d, DD);
+        a = AddUnsigned(a, AA);b = AddUnsigned(b, BB);c = AddUnsigned(c, CC);d = AddUnsigned(d, DD);
     }
     if (bit == 32) {
         return WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
@@ -156,3 +191,9 @@ export function md5(text, bit) {
         return WordToHex(b) + WordToHex(c);
     }
 }
+
+exports.md5 = md5;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
