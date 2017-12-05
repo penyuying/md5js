@@ -2,10 +2,7 @@
 eslint-disable
 */
 export function md5(text, bit) {
-    let s='tttYYY';
-    let txtee=`dsa${s}faf`;
-    var sMessage = text;// this;
-    console.log(txtee);
+    var sMessage = text;//this;
     function RotateLeft(lValue, iShiftBits) { return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits)); }
     function AddUnsigned(lX, lY) {
         var lX4, lY4, lX8, lY8, lResult;
@@ -63,16 +60,16 @@ export function md5(text, bit) {
         return lWordArray;
     }
     function WordToHex(lValue) {
-        var WordToHexValue = '', WordToHexValue_temp = '', lByte, lCount;
+        var WordToHexValue = "", WordToHexValue_temp = "", lByte, lCount;
         for (lCount = 0; lCount <= 3; lCount++) {
             lByte = (lValue >>> (lCount * 8)) & 255;
-            WordToHexValue_temp = '0' + lByte.toString(16);
+            WordToHexValue_temp = "0" + lByte.toString(16);
             WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
         }
         return WordToHexValue;
     }
     var x = Array();
-    var k, AA, BB, CC, DD, a, b, c, d;
+    var k, AA, BB, CC, DD, a, b, c, d
     var S11 = 7, S12 = 12, S13 = 17, S14 = 22;
     var S21 = 5, S22 = 9, S23 = 14, S24 = 20;
     var S31 = 4, S32 = 11, S33 = 16, S34 = 23;
@@ -152,7 +149,9 @@ export function md5(text, bit) {
     }
     if (bit == 32) {
         return WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
-    } else {
+    }
+    else {
         return WordToHex(b) + WordToHex(c);
     }
 }
+

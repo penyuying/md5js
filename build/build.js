@@ -169,4 +169,3 @@ function green(str) {
 function logError(e) {
     console.log(e);
 }
-console.log(resolve('dist'));
