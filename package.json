@@ -1,6 +1,6 @@
 {
   "name": "md5js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "字符串md5加密工具",
   "main": "./dist/md5.js",
   "scripts": {
