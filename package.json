@@ -17,6 +17,7 @@
     "md5-md16"
   ],
   "author": "penyuying",
+  "types": "./types/md5.d.ts",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/penyuying/md5js/issues"
