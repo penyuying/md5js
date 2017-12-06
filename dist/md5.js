@@ -1,5 +1,5 @@
 /*!
- * md5js v1.0.2
+ * md5js v1.0.5
  * (c) 2017-2017 penyuying
  * Released under the MIT License.
  */
@@ -13,10 +13,7 @@
 eslint-disable
 */
 function md5(text, bit) {
-    var s = 'tttYYY';
-    var txtee = 'dsa' + s + 'faf';
-    var sMessage = text; // this;
-    console.log(txtee);
+    var sMessage = text; //this;
     function RotateLeft(lValue, iShiftBits) {
         return lValue << iShiftBits | lValue >>> 32 - iShiftBits;
     }
@@ -83,13 +80,13 @@ function md5(text, bit) {
         return lWordArray;
     }
     function WordToHex(lValue) {
-        var WordToHexValue = '',
-            WordToHexValue_temp = '',
+        var WordToHexValue = "",
+            WordToHexValue_temp = "",
             lByte,
             lCount;
         for (lCount = 0; lCount <= 3; lCount++) {
             lByte = lValue >>> lCount * 8 & 255;
-            WordToHexValue_temp = '0' + lByte.toString(16);
+            WordToHexValue_temp = "0" + lByte.toString(16);
             WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
         }
         return WordToHexValue;
