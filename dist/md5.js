@@ -1,6 +1,6 @@
 /*!
- * md5js v1.0.5
- * (c) 2017-2017 penyuying
+ * md5js v1.0.7
+ * (c) 2017-2018 penyuying
  * Released under the MIT License.
  */
 (function (global, factory) {
